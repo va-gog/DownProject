@@ -1,0 +1,19 @@
+{
+    "filters": [
+        {
+            "imageName": "pic_profile2",
+            "title": "Nearby",
+            "profilesURL": "https://raw.githubusercontent.com/downapp/sample/main/sample.json"
+        },
+        {
+            "imageName": "pic_profile3",
+            "title": "3some",
+            "profilesURL": ""
+        },
+        {
+            "imageName": "pic_profile",
+            "title": "Los Angeles",
+            "profilesURL": ""
+        }
+    ]
+}
