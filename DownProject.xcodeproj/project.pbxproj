@@ -237,8 +237,7 @@
 				494BFA402C32851700019F55 /* ViewTexts.swift */,
 				494BF9D42C302ACA00019F55 /* Main.storyboard */,
 				494BFA202C32138A00019F55 /* DownloadState.swift */,
-				494BFA392C3279E700019F55 /* ErrorView.swift */,
-				494BFA442C3286B200019F55 /* ErrorHUDViewTheme.swift */,
+				494BFA462C3287F000019F55 /* ErrorView */,
 				494BFA3F2C327F1100019F55 /* Filters */,
 				494BFA302C326F4D00019F55 /* Profiles */,
 			);
@@ -282,6 +281,15 @@
 				494BFA1E2C32066C00019F55 /* FiltersCollectionViewManager.swift */,
 			);
 			path = Filters;
+			sourceTree = "<group>";
+		};
+		494BFA462C3287F000019F55 /* ErrorView */ = {
+			isa = PBXGroup;
+			children = (
+				494BFA392C3279E700019F55 /* ErrorView.swift */,
+				494BFA442C3286B200019F55 /* ErrorHUDViewTheme.swift */,
+			);
+			path = ErrorView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

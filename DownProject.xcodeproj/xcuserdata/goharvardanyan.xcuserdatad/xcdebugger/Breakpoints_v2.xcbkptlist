@@ -84,5 +84,51 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C068446A-716B-4A0E-A7B0-1FC7CD82CF88"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DownProject/MainScreen/Filters/FiltersCollectionViewManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "27"
+            endingLineNumber = "27"
+            landmarkName = "selectFilterIfNeeded()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "C068446A-716B-4A0E-A7B0-1FC7CD82CF88 - a2ac52f0adb83892"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "DownProject.FiltersCollectionViewManager.selectFilterIfNeeded() -&gt; ()"
+                  moduleName = "DownProject"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/goharvardanyan/Desktop/DownProject/DownProject/MainScreen/Filters/FiltersCollectionViewManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "27"
+                  endingLineNumber = "27">
+               </Location>
+               <Location
+                  uuid = "C068446A-716B-4A0E-A7B0-1FC7CD82CF88 - b0d0da73da38b18e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in DownProject.FiltersCollectionViewManager.selectFilterIfNeeded() -&gt; ()"
+                  moduleName = "DownProject"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/goharvardanyan/Desktop/DownProject/DownProject/MainScreen/Filters/FiltersCollectionViewManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "27"
+                  endingLineNumber = "27">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

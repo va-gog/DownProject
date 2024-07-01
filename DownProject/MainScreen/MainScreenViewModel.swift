@@ -44,7 +44,7 @@ final class MainScreenViewModel: MainScreenViewModelInterface {
                     self?.downloadState = .failed(error)
                 }
             }, receiveValue: { [weak self] dataModel in
-                self?.profiles = []
+                self?.profiles = dataModel
             })
     }
     

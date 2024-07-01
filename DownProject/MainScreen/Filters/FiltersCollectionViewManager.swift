@@ -78,6 +78,11 @@ final class FiltersCollectionViewManager: NSObject, UICollectionViewDataSource, 
         return cell
     }
     
+    
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        selectFilterIfNeeded()
+    }
+    
     // MARK: UICollectionViewDelegate
 
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
