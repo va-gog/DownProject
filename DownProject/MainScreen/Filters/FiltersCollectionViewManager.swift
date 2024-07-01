@@ -1,5 +1,5 @@
 //
-//  FiltersCollectionViewHandler.swift
+//  FiltersCollectionViewManager.swift
 //  DownProject
 //
 //  Created by Gohar Vardanyan on 7/1/24.
@@ -7,9 +7,10 @@
 
 import UIKit
 
-class FiltersCollectionViewHandler: NSObject, UICollectionViewDataSource, UIGestureRecognizerDelegate, UICollectionViewDelegateFlowLayout {
+final class FiltersCollectionViewManager: NSObject, UICollectionViewDataSource, UIGestureRecognizerDelegate, UICollectionViewDelegateFlowLayout {
     private var viewModel: MainScreenViewModelInterface
     private var filtersViewContainer: UIView
+    private var theme = FiltersCollectionViewTheme()
     
     var filtersCollectionView: UICollectionView?
     var didSelectFilter: (() -> Void)?
@@ -34,9 +35,10 @@ class FiltersCollectionViewHandler: NSObject, UICollectionViewDataSource, UIGest
     
     private func setupFilterCollectionView() {
         let layout = UICollectionViewFlowLayout()
-        layout.minimumLineSpacing = 20
         layout.scrollDirection = .horizontal
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        layout.minimumLineSpacing = theme.minimumLineSpacing
+        layout.sectionInset = theme.sectionInset
+        
         let collectionView = UICollectionView(frame: CGRect(origin: .zero,
                                                             size: filtersViewContainer.bounds.size),
                                               collectionViewLayout: layout)
@@ -45,6 +47,7 @@ class FiltersCollectionViewHandler: NSObject, UICollectionViewDataSource, UIGest
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.backgroundColor = .clear
+        
         filtersViewContainer.addSubview(collectionView)
         
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -54,6 +57,7 @@ class FiltersCollectionViewHandler: NSObject, UICollectionViewDataSource, UIGest
             collectionView.leadingAnchor.constraint(equalTo: filtersViewContainer.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: filtersViewContainer.trailingAnchor)
         ])
+        
         self.filtersCollectionView = collectionView
     }
     
@@ -92,6 +96,6 @@ class FiltersCollectionViewHandler: NSObject, UICollectionViewDataSource, UIGest
     // MARK: UICollectionViewDelegateFlowLayout
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 60, height: 80)
+        return theme.cellSize
     }
 }

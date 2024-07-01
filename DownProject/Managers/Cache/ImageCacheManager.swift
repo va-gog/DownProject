@@ -7,11 +7,16 @@
 
 import UIKit
 
-final class ImageCacheManager: ImageCacheManagerInterface {
+struct ImageCacheManager: ImageCacheManagerInterface {
     private let cache: NSCache<NSString, NSData>
     
     init(cache: NSCache<NSString, NSData>) {
         self.cache = cache
+    }
+    
+    func configureCache(countLimit: Int, totalCostLimit: Int) {
+        cache.countLimit = countLimit
+        cache.totalCostLimit = totalCostLimit
     }
     
     func downloadAndCacheData(urlString: String) async throws -> Data {

@@ -29,6 +29,8 @@ final class MainScreenViewModel: MainScreenViewModelInterface {
         self.profiles = profiles
         self.networkManager = networkManager
         self.filters = filters
+        cacheManager.configureCache(countLimit: 50,
+                                    totalCostLimit: 50 * 1024 * 1024)
     }
     
     func downloadProfiles(urlString: String) async {
@@ -42,7 +44,7 @@ final class MainScreenViewModel: MainScreenViewModelInterface {
                     self?.downloadState = .failed(error)
                 }
             }, receiveValue: { [weak self] dataModel in
-                self?.profiles = dataModel
+                self?.profiles = []
             })
     }
     

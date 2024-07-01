@@ -10,28 +10,30 @@ import UIKit
 final class ProfileCollectionViewCell: UICollectionViewCell {
     static let reuseIdentifier = "ProfileCollectionViewCell"
 
-    @IBOutlet weak var profileImage: UIImageView!
-    @IBOutlet weak var ageLabel: UILabel!
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var infoContainer: UIView!
-    @IBOutlet weak var stackView: UIStackView!
-    @IBOutlet weak var icon: UIImageView!
-    @IBOutlet weak var actionLabel: UILabel!
+    @IBOutlet private weak var profileImage: UIImageView!
+    @IBOutlet private weak var ageLabel: UILabel!
+    @IBOutlet private weak var nameLabel: UILabel!
+    @IBOutlet private weak var infoContainer: UIView!
+    @IBOutlet private weak var stackView: UIStackView!
+    @IBOutlet private weak var icon: UIImageView!
+    @IBOutlet private weak var actionLabel: UILabel!
+    
+    private let theme = ProfileCollectionViewCellTheme()
     
     override func awakeFromNib() {
         super.awakeFromNib()
         backgroundColor = .clear
-        layer.cornerRadius = 30
+        layer.cornerRadius = theme.containerCornerradius
         clipsToBounds = true
         
-        profileImage.layer.cornerRadius = 30
+        profileImage.layer.cornerRadius = theme.profileImageCornerRadius
         profileImage.contentMode = .scaleAspectFill
         
-        stackView.layer.cornerRadius = 20
+        stackView.layer.cornerRadius = theme.stackViewCornerradius
+        stackView.alpha = theme.stackViewAlpha
         stackView.isHidden = true
-        stackView.alpha = 0.5
         stackView.isLayoutMarginsRelativeArrangement = true
-        stackView.layoutMargins = UIEdgeInsets(top: 5, left: 0, bottom: 0, right: 20)
+        stackView.layoutMargins = theme.stackViewLayoutMargins
         
         icon.contentMode = .scaleAspectFit
     }
@@ -39,8 +41,7 @@ final class ProfileCollectionViewCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         stackView.isHidden = true
-        stackView.alpha = 0.5
-        stackView.isHidden = true
+        stackView.alpha = theme.stackViewAlpha
         icon.image = nil
         actionLabel.text = nil
         nameLabel.text = nil
@@ -65,14 +66,23 @@ final class ProfileCollectionViewCell: UICollectionViewCell {
         profileImage.transform = tranform
     }
     
-    func activateAction(imageName: String, action: String) {
+    func deactivateAction() {
+        infoContainer.isHidden = false
+        stackView.isHidden = true
+        actionLabel.text = nil
+        icon.image = nil
+    }
+    
+    func activateAction(actionModel: SwipeActionModel) {
         infoContainer.isHidden = true
         stackView.isHidden = false
-        actionLabel.text = action
-        icon.image = UIImage(systemName: imageName)
+        actionLabel.text = actionModel.type.rawValue
+        icon.image = UIImage(systemName: actionModel.iconName)
     }
     
     func changeOpacity(_ alpha: CGFloat) {
         stackView.alpha = alpha
     }
 }
+
+

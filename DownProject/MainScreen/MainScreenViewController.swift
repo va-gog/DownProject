@@ -9,19 +9,20 @@ import UIKit
 import Combine
 
 final class MainScreenViewController: UIViewController, UITabBarDelegate {
-    @IBOutlet private weak var myLocationButton: UIButton!
-    @IBOutlet private weak var profilesViewContainer: UIView!
     @IBOutlet private weak var bottomTabBar: UITabBar!
     @IBOutlet private weak var topBarContainer: UIView!
     @IBOutlet private weak var filtersContainer: UIView!
+    @IBOutlet private weak var profilesViewContainer: UIView!
+    @IBOutlet private weak var myLocationButton: UIButton!
 
-    private var profilesCollectionViewHandler: ProfilesCollectionViewHandler?
-    private var filtersCollectionViewHandler: FiltersCollectionViewHandler?
+    private var profilesCollectionViewHandler: ProfilesCollectionViewManager?
+    private var filtersCollectionViewHandler: FiltersCollectionViewManager?
     private var activityIndicator: UIActivityIndicatorView?
-    private var errorHUD: UIView?
+    private var errorHUD: ErrorHUDView?
     private var emptyPrifilesView: EmptyView?
     
     private let screenViewModel = MainScreenViewModel()
+    private let theme = MainScreenViewTheme()
     private var cancellable: [AnyCancellable] = []
     
     override func viewDidLoad() {
@@ -53,11 +54,10 @@ final class MainScreenViewController: UIViewController, UITabBarDelegate {
                 guard let self = self else { return }
                 switch state {
                 case .loading:
-                    self.profilesCollectionViewHandler?.profilesCollectionView?.isHidden = true
+                    self.profilesCollectionViewHandler?.profilesCollectionView.isHidden = true
                     self.showLoading(true)
                 case .finished:
                     self.showLoading(false)
-                    self.createProfiles()
                 case .failed(_):
                     self.showLoading(false)
                     self.showErrorHUD("Something went wrong")
@@ -67,23 +67,30 @@ final class MainScreenViewController: UIViewController, UITabBarDelegate {
             }
         }.store(in: &cancellable)
         
-        screenViewModel.$filters.sink { [weak self] _ in
-            Task { @MainActor in
+        screenViewModel.$filters
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
                 self?.filtersCollectionViewHandler?.filtersCollectionView?.reloadData()
-            }
+        }.store(in: &cancellable)
+        
+        screenViewModel.$profiles
+            .dropFirst()
+            .receive(on: DispatchQueue.main)
+            .sink { models in
+                    self.createProfiles()
         }.store(in: &cancellable)
     }
     
     private func setupBottomToolbar() {
         bottomTabBar.isTranslucent = false
-        bottomTabBar.barTintColor = UIColor.black
-        bottomTabBar.tintColor = UIColor.white
-        bottomTabBar.unselectedItemTintColor = UIColor.lightGray
+        bottomTabBar.barTintColor = theme.bottomTabBarBackgorunColor
+        bottomTabBar.tintColor = theme.bottomTabBarTintColor
+        bottomTabBar.unselectedItemTintColor = theme.bottomTabBarUnselectedItemTintColor
         bottomTabBar.selectedItem = bottomTabBar.items?[0]
         bottomTabBar.delegate = self
         
         let seperator = UIView(frame: .zero)
-        seperator.backgroundColor = .darkGray
+        seperator.backgroundColor = theme.seperatorBackgroundColor
         bottomTabBar.addSubview(seperator)
         seperator.translatesAutoresizingMaskIntoConstraints = false
         
@@ -91,19 +98,19 @@ final class MainScreenViewController: UIViewController, UITabBarDelegate {
             seperator.topAnchor.constraint(equalTo: bottomTabBar.topAnchor),
             seperator.leadingAnchor.constraint(equalTo: bottomTabBar.leadingAnchor),
             seperator.trailingAnchor.constraint(equalTo: bottomTabBar.trailingAnchor),
-            seperator.heightAnchor.constraint(equalToConstant: 1)
+            seperator.heightAnchor.constraint(equalToConstant: theme.seperatorHeight)
         ])
     }
     
     func setupMyProfileButton() {
         var config = UIButton.Configuration.plain()
-        config.image = UIImage(named: "pic_profile")
+        config.image = UIImage(named: theme.myProfileImg)
         
         let button = UIButton(type: .system)
         button.configuration = config
-        button.layer.cornerRadius = 15
-        button.layer.borderWidth = 2
-        button.layer.borderColor = UIColor.white.cgColor
+        button.layer.cornerRadius = theme.myProfileButtonCornerRadius
+        button.layer.borderWidth = theme.myProfileButtonBorderWidth
+        button.layer.borderColor = theme.myProfileButtonBorderColor
         button.clipsToBounds = true
         button.imageView?.contentMode = .scaleAspectFill
                 
@@ -112,22 +119,25 @@ final class MainScreenViewController: UIViewController, UITabBarDelegate {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.imageView?.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            button.topAnchor.constraint(equalTo: topBarContainer.topAnchor, constant: 5),
-            button.bottomAnchor.constraint(equalTo: topBarContainer.bottomAnchor, constant: -5),
-            button.widthAnchor.constraint(equalToConstant: 30),
-            button.leadingAnchor.constraint(equalTo: topBarContainer.leadingAnchor, constant: 10),
-            button.imageView!.widthAnchor.constraint(equalToConstant: 30),
-            button.imageView!.heightAnchor.constraint(equalToConstant: 30)
+            button.topAnchor.constraint(equalTo: topBarContainer.topAnchor,
+                                        constant: theme.myProfileButtonTopAnchor),
+            button.bottomAnchor.constraint(equalTo: topBarContainer.bottomAnchor,
+                                           constant: theme.myProfileButtonBottomAnchor),
+            button.widthAnchor.constraint(equalToConstant: theme.myProfileButtonWidthAnchor),
+            button.leadingAnchor.constraint(equalTo: topBarContainer.leadingAnchor,
+                                            constant: theme.myProfileButtonLeadingAnchor),
+            button.imageView!.widthAnchor.constraint(equalToConstant: theme.myProfileButtonImageViewSize),
+            button.imageView!.heightAnchor.constraint(equalToConstant: theme.myProfileButtonImageViewSize)
         ])
     }
     
     private func setupProfilesCollectionViewHandler() {
-        profilesCollectionViewHandler = ProfilesCollectionViewHandler(viewModel: screenViewModel,
+        profilesCollectionViewHandler = ProfilesCollectionViewManager(viewModel: screenViewModel,
                                                                       profilesViewContainer: profilesViewContainer)
     }
     
     private func setupFilterCollectionViewHandler() {
-        let filtersCollectionViewHandler = FiltersCollectionViewHandler(viewModel: screenViewModel,
+        let filtersCollectionViewHandler = FiltersCollectionViewManager(viewModel: screenViewModel,
                                                                         filtersViewContainer: filtersContainer)
         self.filtersCollectionViewHandler = filtersCollectionViewHandler
         filtersCollectionViewHandler.didSelectFilter = { [weak self] in
@@ -144,19 +154,21 @@ final class MainScreenViewController: UIViewController, UITabBarDelegate {
             return
         }
         
-        profilesCollectionViewHandler?.profilesCollectionView?.isHidden = false
-        profilesCollectionViewHandler?.profilesCollectionView?.reloadData()
+        profilesCollectionViewHandler?.profilesCollectionView.isHidden = false
+        profilesCollectionViewHandler?.profilesCollectionView.reloadData()
     }
     
     private func createEmptyView() {
-        let emptyView = EmptyView(title: NSLocalizedString("Try another filter", comment: "") ,
-                                  subtitle: NSLocalizedString("Tats's all for now, but don't worry, there are new singles joining every second. Try another filter or check back later", comment: ""),
+        let titles = ViewTexts()
+        let emptyView = EmptyView(title: NSLocalizedString(titles.emptyViewTitle, comment: "") ,
+                                  subtitle: NSLocalizedString(titles.emptyViewSubtitle, comment: ""),
                                   frame: .zero)
-        emptyView.backgroundColor = .clear
-        emptyView.backgroundColor = UIColor(red: 20/255, green: 20/255, blue: 20/255, alpha: 1)
+        emptyView.backgroundColor = MainScreenViewTheme.emptyViewBackgroundColor
+        emptyView.layer.cornerRadius = theme.emptyViewCornerRadius
+        emptyView.layer.borderColor = theme.emptyViewBorderColor
+        emptyView.layer.borderWidth = theme.emptyViewBorderWidth
         
         profilesViewContainer.addSubview(emptyView)
-
         emptyView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             emptyView.topAnchor.constraint(equalTo: profilesViewContainer.topAnchor),
@@ -172,31 +184,36 @@ final class MainScreenViewController: UIViewController, UITabBarDelegate {
             let container = UIView()
             container.backgroundColor = UIColor.clear
             container.translatesAutoresizingMaskIntoConstraints = false
-            container.layer.cornerRadius = 30
-            container.layer.borderColor = UIColor.white.cgColor
-            container.layer.borderWidth = 1
-            container.backgroundColor = UIColor(red: 20/255, green: 20/255, blue: 20/255, alpha: 1)
+            container.layer.cornerRadius = theme.emptyViewCornerRadius
+            container.layer.borderColor = theme.emptyViewBorderColor
+            container.layer.borderWidth = theme.emptyViewBorderWidth
+            container.backgroundColor = MainScreenViewTheme.emptyViewBackgroundColor
             profilesViewContainer.addSubview(container)
             
             NSLayoutConstraint.activate([
                 container.topAnchor.constraint(equalTo: profilesViewContainer.topAnchor),
                 container.bottomAnchor.constraint(equalTo: profilesViewContainer.bottomAnchor),
-                container.leadingAnchor.constraint(equalTo: profilesViewContainer.leadingAnchor, constant: 20),
-                container.trailingAnchor.constraint(equalTo: profilesViewContainer.trailingAnchor, constant: -20),
+                container.leadingAnchor.constraint(equalTo: profilesViewContainer.leadingAnchor,
+                                                   constant: theme.emptyViewVerticalInset),
+                container.trailingAnchor.constraint(equalTo: profilesViewContainer.trailingAnchor,
+                                                    constant: -theme.emptyViewVerticalInset),
                 ])
 
-                
             let indicator = UIActivityIndicatorView(style: .large)
-            container.addSubview(indicator)
             indicator.hidesWhenStopped = true
-            indicator.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
-            indicator.color = UIColor.white
+            indicator.transform = theme.indicatorTransform
+            indicator.color = theme.indicatorColor
+            self.activityIndicator = indicator
+
+            container.addSubview(indicator)
+
             indicator.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
                 indicator.centerXAnchor.constraint(equalTo: container.centerXAnchor),
                 indicator.centerYAnchor.constraint(equalTo: container.centerYAnchor)
             ])
-            self.activityIndicator = indicator
+            
+            
             indicator.startAnimating()
         } else {
             activityIndicator?.stopAnimating()
@@ -206,57 +223,30 @@ final class MainScreenViewController: UIViewController, UITabBarDelegate {
     }
     
     private func showErrorHUD(_ message: String) {
-        let hud = UIView()
-        hud.backgroundColor = UIColor.clear
-        hud.translatesAutoresizingMaskIntoConstraints = false
-        hud.backgroundColor = UIColor(red: 20/255, green: 20/255, blue: 20/255, alpha: 1)
-        hud.translatesAutoresizingMaskIntoConstraints = false
-        hud.layer.borderColor = UIColor.white.cgColor
-        hud.layer.borderWidth = 1
-        
-        profilesViewContainer.addSubview(hud)
+        let hud = ErrorHUDView(message: message, 
+                               buttonTitle: NSLocalizedString(ViewTexts().retryButtonText,
+                                                              comment: "")) {
+            self.retryButtonAction()
+        }
+        hud.backgroundColor =  MainScreenViewTheme.emptyViewBackgroundColor
+        hud.layer.cornerRadius = theme.emptyViewCornerRadius
+        hud.layer.borderColor = theme.emptyViewBorderColor
+        hud.layer.borderWidth = theme.emptyViewBorderWidth
         self.errorHUD = hud
-        
-        let label = UILabel()
-        label.textColor = .white
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        label.text = message
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.tag = 100
-        hud.addSubview(label)
-        
-        let button = UIButton(type: .system)
-        button.setTitle("Try again", for: .normal)
-        button.backgroundColor = .clear
-        button.setTitleColor(.white, for: .normal)
-        button.layer.cornerRadius = 20
-        button.layer.borderWidth = 1
-        button.layer.borderColor = UIColor.white.cgColor
 
-        button.addTarget(self, action: #selector(retryButtonAction), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        hud.addSubview(button)
-
+        profilesViewContainer.addSubview(hud)
+        
+        hud.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             hud.topAnchor.constraint(equalTo: profilesViewContainer.topAnchor),
             hud.bottomAnchor.constraint(equalTo: profilesViewContainer.bottomAnchor),
-            hud.leadingAnchor.constraint(equalTo: profilesViewContainer.leadingAnchor, constant: 20),
-            hud.trailingAnchor.constraint(equalTo: profilesViewContainer.trailingAnchor, constant: -20),
-
-            label.centerXAnchor.constraint(equalTo: hud.centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: hud.centerYAnchor, constant: -30),
-            label.heightAnchor.constraint(equalToConstant: 40),
-            label.widthAnchor.constraint(greaterThanOrEqualToConstant: 60),
-            
-            button.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 15),
-            button.centerXAnchor.constraint(equalTo: hud.centerXAnchor),
-            button.heightAnchor.constraint(equalToConstant: 40),
-            button.widthAnchor.constraint(greaterThanOrEqualToConstant: 100)
+            hud.leadingAnchor.constraint(equalTo: profilesViewContainer.leadingAnchor, 
+                                         constant: theme.emptyViewVerticalInset),
+            hud.trailingAnchor.constraint(equalTo: profilesViewContainer.trailingAnchor,
+                                          constant: -theme.emptyViewVerticalInset)
         ])
     }
     
-    @objc
     func retryButtonAction() {
         errorHUD?.removeFromSuperview()
         errorHUD = nil

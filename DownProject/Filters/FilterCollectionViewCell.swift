@@ -10,16 +10,18 @@ import UIKit
 final class FilterCollectionViewCell: UICollectionViewCell {
     static let reuseIdentifier = "FilterCollectionViewCell"
 
-    @IBOutlet weak var title: UILabel!
-    @IBOutlet weak var filterImage: UIImageView!
+    @IBOutlet private weak var title: UILabel!
+    @IBOutlet private weak var filterImage: UIImageView!
+    
+    private let theme = FilterCollectionViewCellTheme()
     
     override func awakeFromNib() {
         super.awakeFromNib()
         self.filterImage.clipsToBounds = true
-        self.filterImage.layer.cornerRadius = 30
+        self.filterImage.layer.cornerRadius = theme.cornerRadius
         self.filterImage.contentMode = .scaleToFill
-        self.filterImage.layer.borderWidth = 1
-        self.filterImage.layer.borderColor = UIColor.white.cgColor
+        self.filterImage.layer.borderWidth = theme.deselectedBorderWidth
+        self.filterImage.layer.borderColor = theme.deselectedBorderColor.cgColor
     }
     
     override func prepareForReuse() {
@@ -38,12 +40,12 @@ final class FilterCollectionViewCell: UICollectionViewCell {
         didSet {
             if isSelected, !oldValue {
                 title.textColor = .white
-                filterImage.layer.borderWidth = 2
-                filterImage.layer.borderColor = UIColor.purple.cgColor
+                filterImage.layer.borderWidth = theme.selectedBorderWidth
+                filterImage.layer.borderColor = theme.selectedBorderColor.cgColor
             } else if !isSelected, oldValue {
                 title.textColor = .lightGray
-                filterImage.layer.borderWidth = 1
-                filterImage.layer.borderColor = UIColor.white.cgColor
+                filterImage.layer.borderWidth = theme.deselectedBorderWidth
+                filterImage.layer.borderColor = theme.deselectedBorderColor.cgColor
             }
         }
     }
