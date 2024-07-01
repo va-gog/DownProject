@@ -153,7 +153,7 @@ final class NetworkManagerTests: XCTestCase {
         
         networkManager.fetchAndDecode(from: urlString, as: Todo.self)
             .sink(receiveCompletion: { completion in
-                if case .failure(let error) = completion {
+                if case .failure(_) = completion {
                     expectation.fulfill()
                 }
             }, receiveValue: { todo in
