@@ -9,4 +9,5 @@ import Foundation
 
 protocol ImageCacheManagerInterface {
     func downloadAndCacheData(urlString: String) async throws -> Data
+    func configureCache(countLimit: Int, totalCostLimit: Int)
 }

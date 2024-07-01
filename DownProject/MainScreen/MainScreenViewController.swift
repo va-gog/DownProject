@@ -36,7 +36,8 @@ final class MainScreenViewController: UIViewController, UITabBarDelegate {
           
         Task {
             do {
-                try await self.screenViewModel.loadFilters()
+               let url = Bundle.main.url(forResource: "Filters", withExtension: "json")
+                try await self.screenViewModel.loadFilters(url: url)
             } catch {
                 // TODO: Handle error
             }
@@ -45,7 +46,6 @@ final class MainScreenViewController: UIViewController, UITabBarDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        filtersCollectionViewHandler?.selectFilterIfNeeded()
     }
     
     private func setupObservers() {
@@ -70,7 +70,7 @@ final class MainScreenViewController: UIViewController, UITabBarDelegate {
         screenViewModel.$filters
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
-                self?.filtersCollectionViewHandler?.filtersCollectionView?.reloadData()
+                self?.filtersCollectionViewHandler?.filtersCollectionView.reloadData()
         }.store(in: &cancellable)
         
         screenViewModel.$profiles

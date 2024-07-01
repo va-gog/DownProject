@@ -14,12 +14,12 @@ final class MainScreenViewModel: MainScreenViewModelInterface {
     @Published var filters: [FilterModel]
     var selectedFilterIndex: Int = 0
     
-    private var cacheManager: ImageCacheManager
+    private var cacheManager: ImageCacheManagerInterface
     private let networkManager: NetworkManagerProtocol
     
     private var cancellable: AnyCancellable?
     
-    init(cacheManager: ImageCacheManager = ImageCacheManager(cache: NSCache<NSString, NSData>()),
+    init(cacheManager: ImageCacheManagerInterface = ImageCacheManager(cache: NSCache<NSString, NSData>()),
          downloadState: DownloadState = .none,
          profiles: [ProfileModel] = [],
          filters: [FilterModel] = [],
@@ -35,6 +35,7 @@ final class MainScreenViewModel: MainScreenViewModelInterface {
     
     func downloadProfiles(urlString: String) async {
         downloadState = .loading
+
         cancellable = networkManager.fetchAndDecode(from: urlString, as: [ProfileModel].self)
             .sink(receiveCompletion: { [weak self] completion in
                 switch completion {
@@ -48,8 +49,8 @@ final class MainScreenViewModel: MainScreenViewModelInterface {
             })
     }
     
-    func loadFilters() async throws {
-            guard let url = Bundle.main.url(forResource: "Filters", withExtension: "json") else {
+    func loadFilters(url: URL?) async throws {
+            guard let url  else {
                 throw NetworkError.badURL
             }
             

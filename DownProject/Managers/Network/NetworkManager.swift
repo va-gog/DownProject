@@ -8,15 +8,39 @@
 import Foundation
 import Combine
 
+protocol URLSessionManagerProtocol {
+    func dataTaskPublisher(url: URL) -> AnyPublisher<Data, Error>
+    func dataFrom(url: URL) async throws -> (Data, URLResponse)
+
+}
+
+struct URLSessionManager: URLSessionManagerProtocol {
+    func dataTaskPublisher(url: URL) -> AnyPublisher<Data, Error> {
+        URLSession.shared.dataTaskPublisher(for: url)
+           .map { $0.data }
+           .mapError { error in error }
+           .eraseToAnyPublisher()
+    }
+    
+    func dataFrom(url: URL)  async throws -> (Data, URLResponse) {
+       try await URLSession.shared.data(from: url)
+    }
+}
+
 struct NetworkManager: NetworkManagerProtocol {
+    private var sessionManager: URLSessionManagerProtocol
+    
+    init(sessionManager: URLSessionManagerProtocol = URLSessionManager()) {
+        self.sessionManager = sessionManager
+    }
+    
     func downloadJSON(from urlString: String) -> AnyPublisher<Data, NetworkError> {
         guard let url = URL(string: urlString) else {
             return Fail(error: NetworkError.badURL).eraseToAnyPublisher()
         }
         
-        return URLSession.shared.dataTaskPublisher(for: url)
-            .map { $0.data }
-            .mapError { error in NetworkError.unknown(error) }
+        return sessionManager.dataTaskPublisher(url: url)
+            .mapError({ error in NetworkError.unknown(error)})
             .eraseToAnyPublisher()
     }
     

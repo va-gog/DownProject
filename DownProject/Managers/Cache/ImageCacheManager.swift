@@ -9,9 +9,11 @@ import UIKit
 
 struct ImageCacheManager: ImageCacheManagerInterface {
     private let cache: NSCache<NSString, NSData>
-    
-    init(cache: NSCache<NSString, NSData>) {
+    private let sessionManager: URLSessionManagerProtocol
+
+    init(cache: NSCache<NSString, NSData>, sessionManager: URLSessionManagerProtocol = URLSessionManager()) {
         self.cache = cache
+        self.sessionManager = sessionManager
     }
     
     func configureCache(countLimit: Int, totalCostLimit: Int) {
@@ -30,7 +32,7 @@ struct ImageCacheManager: ImageCacheManagerInterface {
             throw NSError(domain: "Invalid URL", code: 0, userInfo: nil)
         }
         
-        let (data, _) = try await URLSession.shared.data(from: url)
+        let (data, _) = try await sessionManager.dataFrom(url: url)
         
         self.cache.setObject(data as NSData, forKey: cacheKey)
         

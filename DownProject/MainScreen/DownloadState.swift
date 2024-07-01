@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum DownloadState {
+enum DownloadState: Equatable {
     case loading
     case finished
     case failed(NetworkError)

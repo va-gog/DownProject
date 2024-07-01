@@ -1,15 +1,15 @@
 //
-//  DownProjectTests.swift
+//  NetworkManagerTests.swift
 //  DownProjectTests
 //
-//  Created by Gohar Vardanyan on 6/29/24.
+//  Created by Gohar Vardanyan on 7/1/24.
 //
 
 import XCTest
 import Combine
 @testable import DownProject
 
-class NetworkManagerTests: XCTestCase {
+final class NetworkManagerTests: XCTestCase {
 
     var networkManager: NetworkManager!
     var mockSessionManager: MockURLSessionManager!
@@ -135,7 +135,7 @@ class NetworkManagerTests: XCTestCase {
             })
             .store(in: &cancellables)
         
-        waitForExpectations(timeout: 5, handler: nil)
+        waitForExpectations(timeout: 1, handler: nil)
     }
 
     func testFetchAndDecodeFailure() {

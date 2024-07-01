@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ProfilesCollectionViewManager: NSObject, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UICollectionViewDataSourcePrefetching, UIGestureRecognizerDelegate {
+final class ProfilesCollectionViewManager: NSObject, UICollectionViewDataSource, UIGestureRecognizerDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDataSourcePrefetching {
     
     var profilesCollectionView: UICollectionView
     

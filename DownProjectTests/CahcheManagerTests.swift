@@ -6,30 +6,56 @@
 //
 
 import XCTest
+@testable import DownProject
 
-final class CahcheManagerTests: XCTestCase {
+final class ImageCacheManagerTests: XCTestCase {
+    var imageCacheManager: ImageCacheManager!
+    var mockCache: NSCache<NSString, NSData>!
+    var mockSessionManager: MockURLSessionManager!
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    override func setUp() {
+        super.setUp()
+        mockCache = NSCache<NSString, NSData>()
+        mockSessionManager = MockURLSessionManager()
+        imageCacheManager = ImageCacheManager(cache: mockCache, sessionManager: mockSessionManager)
     }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    override func tearDown() {
+        imageCacheManager = nil
+        mockCache = nil
+        mockSessionManager = nil
+        super.tearDown()
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+    func testDownloadAndCacheData_ReturnsCachedData() async throws {
+        let urlString = "https://example.com/image.jpg"
+        let expectedData = "Cached Image Data".data(using: .utf8)!
+        mockCache.setObject(expectedData as NSData, forKey: NSString(string: urlString))
+        
+        let data = try await imageCacheManager.downloadAndCacheData(urlString: urlString)
+        
+        XCTAssertEqual(data, expectedData, "Returned data should be equal to the cached data.")
     }
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    func testDownloadAndCacheData_DownloadsAndCachesData() async throws {
+        let urlString = "https://example.com/image.jpg"
+        let expectedData = "Downloaded Image Data".data(using: .utf8)!
+        mockSessionManager.data = expectedData
+        
+        let data = try await imageCacheManager.downloadAndCacheData(urlString: urlString)
+        
+        XCTAssertEqual(data, expectedData, "Returned data should be equal to the downloaded data.")
+        XCTAssertEqual(mockCache.object(forKey: NSString(string: urlString)) as Data?, expectedData, "Cached data should be equal to the downloaded data.")
+    }
+    
+    func testDownloadAndCacheData_InvalidURL() async {
+        let urlString = ""
+        
+        do {
+            _ = try await imageCacheManager.downloadAndCacheData(urlString: urlString)
+            XCTFail("Expected to throw an error for invalid URL")
+        } catch {
+            // Success
         }
     }
-
 }

@@ -15,14 +15,12 @@ final class MockURLSessionManager: URLSessionManagerProtocol {
     let subject = CurrentValueSubject<Data, Error>(Data())
 
     func dataTaskPublisher(url: URL) -> AnyPublisher<Data, Error> {
-        DispatchQueue.main.async {
             if let error = self.error {
                 self.subject.send(completion: .failure(error))
             } else {
                 self.subject.send(self.data ?? Data())
             }
             
-        }
         return subject.eraseToAnyPublisher()
     }
     

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ProfileModel: Codable {
+struct ProfileModel: Codable, Equatable {
     let userId: Int
     let name: String
     let age: Int

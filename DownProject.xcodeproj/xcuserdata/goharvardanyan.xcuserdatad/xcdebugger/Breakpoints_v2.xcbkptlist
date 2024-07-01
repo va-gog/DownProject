@@ -7,127 +7,361 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "5BF7F417-391C-49FE-906C-2D3A18DFF652"
+            uuid = "8E48BB5D-4619-47EE-85E3-459694EB97D9"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "DownProject/MainScreen/ProfilesCollectionViewHandler.swift"
+            filePath = "DownProjectTests/DownProjectTests.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "81"
-            endingLineNumber = "81"
-            landmarkName = "handlePanGesture(_:)"
+            startingLineNumber = "61"
+            endingLineNumber = "61"
+            landmarkName = "testDownloadJSON_WhenUrlSessionFaialed()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "5DDB4574-C682-49BA-A9F8-76C2480B805A"
+            uuid = "85A1243C-6660-4CAE-9AE6-F75985A5A80F"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "DownProject/MainScreen/ProfilesCollectionViewHandler.swift"
+            filePath = "DownProject/Managers/Cache/ImageCacheManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "89"
-            endingLineNumber = "89"
-            landmarkName = "handlePanGesture(_:)"
+            startingLineNumber = "25"
+            endingLineNumber = "25"
+            landmarkName = "downloadAndCacheData(urlString:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "AB74FDF2-49CD-4B5C-A0A7-120FD2168271"
+            uuid = "37749A36-747A-4571-9909-026D93FEB5DF"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "DownProject/MainScreen/ProfilesCollectionViewHandler.swift"
+            filePath = "DownProjectTests/CahcheManagerTests.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "172"
-            endingLineNumber = "172"
-            landmarkName = "collectionView(_:prefetchItemsAt:)"
+            startingLineNumber = "48"
+            endingLineNumber = "48"
+            landmarkName = "testDownloadAndCacheData_DownloadsAndCachesData()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "E5FD5198-7CC0-48E7-8312-7F6A9DA9B7FF"
+            uuid = "7FE2F7C6-2B4A-49E2-B08B-A3E8E1F08B5F"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "DownProject/MainScreen/ProfilesCollectionViewHandler.swift"
+            filePath = "DownProjectTests/CahcheManagerTests.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "139"
-            endingLineNumber = "139"
-            landmarkName = "scrollViewDidEndDragging(_:willDecelerate:)"
+            startingLineNumber = "37"
+            endingLineNumber = "37"
+            landmarkName = "testDownloadAndCacheData_ReturnsCachedData()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "2930DFA4-2B58-4D4B-98E0-1CAF6AB53E59"
+            uuid = "4A89D258-71AE-4BAC-91FC-8E503DAC5210"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "DownProject/MainScreen/MainScreenViewController.swift"
+            filePath = "DownProjectTests/DownProjectTests.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "251"
-            endingLineNumber = "251"
-            landmarkName = "retryButtonAction()"
-            landmarkType = "7">
+            startingLineNumber = "24"
+            endingLineNumber = "24"
+            landmarkName = "NetworkManagerTests"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "C068446A-716B-4A0E-A7B0-1FC7CD82CF88"
+            uuid = "088A9A23-0A3F-4E50-AE24-DBD877938EF8"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "DownProject/MainScreen/Filters/FiltersCollectionViewManager.swift"
+            filePath = "DownProjectTests/Mocks/MockNetworkManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "27"
-            endingLineNumber = "27"
-            landmarkName = "selectFilterIfNeeded()"
+            startingLineNumber = "20"
+            endingLineNumber = "20"
+            landmarkName = "fetchAndDecode(from:as:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "C068446A-716B-4A0E-A7B0-1FC7CD82CF88 - a2ac52f0adb83892"
+                  uuid = "088A9A23-0A3F-4E50-AE24-DBD877938EF8 - cc13775219c579a8"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "DownProject.FiltersCollectionViewManager.selectFilterIfNeeded() -&gt; ()"
-                  moduleName = "DownProject"
+                  symbolName = "DownProjectTests.MockNetworkManager.fetchAndDecode&lt;&#x3c4;_0_0 where &#x3c4;_0_0: Swift.Decodable&gt;(from: Swift.String, as: &#x3c4;_0_0.Type) -&gt; Combine.AnyPublisher&lt;&#x3c4;_0_0, DownProject.NetworkError&gt;"
+                  moduleName = "DownProjectTests"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/goharvardanyan/Desktop/DownProject/DownProject/MainScreen/Filters/FiltersCollectionViewManager.swift"
+                  urlString = "file:///Users/goharvardanyan/Desktop/DownProject/DownProjectTests/Mocks/MockNetworkManager.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "27"
-                  endingLineNumber = "27">
+                  startingLineNumber = "20"
+                  endingLineNumber = "20">
                </Location>
                <Location
-                  uuid = "C068446A-716B-4A0E-A7B0-1FC7CD82CF88 - b0d0da73da38b18e"
+                  uuid = "088A9A23-0A3F-4E50-AE24-DBD877938EF8 - cc13775219c579a8"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 @Swift.MainActor () -&gt; () in DownProject.FiltersCollectionViewManager.selectFilterIfNeeded() -&gt; ()"
-                  moduleName = "DownProject"
+                  symbolName = "DownProjectTests.MockNetworkManager.fetchAndDecode&lt;&#x3c4;_0_0 where &#x3c4;_0_0: Swift.Decodable&gt;(from: Swift.String, as: &#x3c4;_0_0.Type) -&gt; Combine.AnyPublisher&lt;&#x3c4;_0_0, DownProject.NetworkError&gt;"
+                  moduleName = "DownProjectTests"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/goharvardanyan/Desktop/DownProject/DownProject/MainScreen/Filters/FiltersCollectionViewManager.swift"
+                  urlString = "file:///Users/goharvardanyan/Desktop/DownProject/DownProjectTests/Mocks/MockNetworkManager.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "27"
-                  endingLineNumber = "27">
+                  startingLineNumber = "20"
+                  endingLineNumber = "20">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "AD125D70-071C-457D-841F-70E83AEF898D"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DownProjectTests/Mocks/MockNetworkManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "21"
+            endingLineNumber = "21"
+            landmarkName = "fetchAndDecode(from:as:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "AC967E2A-45EE-4A32-8AF2-FE57DF7DB80F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DownProjectTests/MainScreenViewModelTests.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "41"
+            endingLineNumber = "41"
+            landmarkName = "testDownloadProfiles_Success()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "AC967E2A-45EE-4A32-8AF2-FE57DF7DB80F - 578f709182a0c9b7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for DownProjectTests.MainScreenViewModelTests.testDownloadProfiles_Success() async -&gt; ()"
+                  moduleName = "DownProjectTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/goharvardanyan/Desktop/DownProject/DownProjectTests/MainScreenViewModelTests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "41"
+                  endingLineNumber = "41">
+               </Location>
+               <Location
+                  uuid = "AC967E2A-45EE-4A32-8AF2-FE57DF7DB80F - db19c58d518081c6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(2) await resume partial function for DownProjectTests.MainScreenViewModelTests.testDownloadProfiles_Success() async -&gt; ()"
+                  moduleName = "DownProjectTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/goharvardanyan/Desktop/DownProject/DownProjectTests/MainScreenViewModelTests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "39"
+                  endingLineNumber = "39">
+               </Location>
+               <Location
+                  uuid = "AC967E2A-45EE-4A32-8AF2-FE57DF7DB80F - db19c58d51808184"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(2) await resume partial function for DownProjectTests.MainScreenViewModelTests.testDownloadProfiles_Success() async -&gt; ()"
+                  moduleName = "DownProjectTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/goharvardanyan/Desktop/DownProject/DownProjectTests/MainScreenViewModelTests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "41"
+                  endingLineNumber = "41">
+               </Location>
+               <Location
+                  uuid = "AC967E2A-45EE-4A32-8AF2-FE57DF7DB80F - 3573e88d788985b1"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for DownProjectTests.MainScreenViewModelTests.testDownloadProfiles_Success() async -&gt; ()"
+                  moduleName = "DownProjectTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/goharvardanyan/Desktop/DownProject/DownProjectTests/MainScreenViewModelTests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "41"
+                  endingLineNumber = "41">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "AB6442B7-2C4E-4F3D-BF01-FD70E2BA0A99"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DownProject/MainScreen/MainScreenViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "48"
+            endingLineNumber = "48"
+            landmarkName = "downloadProfiles(urlString:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "DD752F2F-E4E5-4D28-80FA-8F87B2ACC822"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DownProject/MainScreen/MainScreenViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "43"
+            endingLineNumber = "43"
+            landmarkName = "downloadProfiles(urlString:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "661D02D8-4442-4DAF-95F4-B17CA8193059"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DownProject/MainScreen/MainScreenViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
+            landmarkName = "downloadProfiles(urlString:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5B8D9724-FB5A-4A3A-9D89-F9B28B48846F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DownProjectTests/MainScreenViewModelTests.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "43"
+            endingLineNumber = "43"
+            landmarkName = "testDownloadProfiles_Success()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "68503495-A52F-4C1E-93D4-7B075AE9F5C5"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DownProjectTests/Mocks/MockNetworkManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "23"
+            endingLineNumber = "23"
+            landmarkName = "fetchAndDecode(from:as:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "927C451C-4D97-4A52-9FBC-AED2C33AEE3A"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DownProjectTests/NetworkManagerTests.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "122"
+            endingLineNumber = "122"
+            landmarkName = "testFetchAndDecodeSuccess()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "850177DC-FDFA-4A4E-92CD-BAD0704D60A1"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DownProject/Managers/Network/NetworkManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "48"
+            endingLineNumber = "48"
+            landmarkName = "fetchAndDecode(from:as:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "64A27EFD-AF27-4373-BCF0-4AA12E2026D8"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DownProjectTests/Mocks/URLSessionMock.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "19"
+            endingLineNumber = "19"
+            landmarkName = "dataTaskPublisher(url:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F8E31BE4-80A2-4375-B060-41EC98B12C23"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DownProjectTests/Mocks/URLSessionMock.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "21"
+            endingLineNumber = "21"
+            landmarkName = "dataTaskPublisher(url:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

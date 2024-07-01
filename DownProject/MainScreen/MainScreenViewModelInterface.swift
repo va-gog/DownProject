@@ -14,7 +14,7 @@ protocol MainScreenViewModelInterface {
     var filters: [FilterModel] { get }
 
     func downloadProfiles(urlString: String) async
-    func loadFilters() async throws
+    func loadFilters(url: URL?) async throws
     func loadProfileImage(urlString: String) async throws -> Data
     func filterSelected(at index: Int)
     func shouldSelectFilter(at index: Int) -> Bool

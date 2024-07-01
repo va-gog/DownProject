@@ -7,58 +7,46 @@
 
 import UIKit
 
-final class FiltersCollectionViewManager: NSObject, UICollectionViewDataSource, UIGestureRecognizerDelegate, UICollectionViewDelegateFlowLayout {
+final class FiltersCollectionViewManager: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     private var viewModel: MainScreenViewModelInterface
     private var filtersViewContainer: UIView
     private var theme = FiltersCollectionViewTheme()
     
-    var filtersCollectionView: UICollectionView?
+    var filtersCollectionView: UICollectionView
     var didSelectFilter: (() -> Void)?
     
     init(viewModel: MainScreenViewModelInterface, filtersViewContainer: UIView) {
         self.viewModel = viewModel
         self.filtersViewContainer = filtersViewContainer
-        super.init()
-        self.setupFilterCollectionView()
-    }
-    
-    func selectFilterIfNeeded() {
-        guard filtersCollectionView?.indexPathsForSelectedItems?.isEmpty ?? false else { return }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            if let collectionView = self.filtersCollectionView {
-                let initialIndexPath = IndexPath(item: 0, section: 0)
-                collectionView.selectItem(at: initialIndexPath, animated: true, scrollPosition: .centeredVertically)
-                collectionView.delegate?.collectionView?(collectionView, didSelectItemAt: initialIndexPath)
-            }
-        }
-    }
-    
-    private func setupFilterCollectionView() {
+        
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = theme.minimumLineSpacing
         layout.sectionInset = theme.sectionInset
         
-        let collectionView = UICollectionView(frame: CGRect(origin: .zero,
+        filtersCollectionView = UICollectionView(frame: CGRect(origin: .zero,
                                                             size: filtersViewContainer.bounds.size),
                                               collectionViewLayout: layout)
+        super.init()
+        self.setupFilterCollectionView()
+    }
+    
+    private func setupFilterCollectionView() {
         let nib = UINib(nibName: FilterCollectionViewCell.reuseIdentifier, bundle: nil)
-        collectionView.register(nib, forCellWithReuseIdentifier: FilterCollectionViewCell.reuseIdentifier)
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.backgroundColor = .clear
+        filtersCollectionView.register(nib, forCellWithReuseIdentifier: FilterCollectionViewCell.reuseIdentifier)
+        filtersCollectionView.dataSource = self
+        filtersCollectionView.delegate = self
+        filtersCollectionView.backgroundColor = .clear
         
-        filtersViewContainer.addSubview(collectionView)
+        filtersViewContainer.addSubview(filtersCollectionView)
         
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        filtersCollectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: filtersViewContainer.topAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: filtersViewContainer.bottomAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: filtersViewContainer.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: filtersViewContainer.trailingAnchor)
+            filtersCollectionView.topAnchor.constraint(equalTo: filtersViewContainer.topAnchor),
+            filtersCollectionView.bottomAnchor.constraint(equalTo: filtersViewContainer.bottomAnchor),
+            filtersCollectionView.leadingAnchor.constraint(equalTo: filtersViewContainer.leadingAnchor),
+            filtersCollectionView.trailingAnchor.constraint(equalTo: filtersViewContainer.trailingAnchor)
         ])
-        
-        self.filtersCollectionView = collectionView
     }
     
     
@@ -78,11 +66,6 @@ final class FiltersCollectionViewManager: NSObject, UICollectionViewDataSource, 
         return cell
     }
     
-    
-    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        selectFilterIfNeeded()
-    }
-    
     // MARK: UICollectionViewDelegate
 
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
@@ -98,9 +81,24 @@ final class FiltersCollectionViewManager: NSObject, UICollectionViewDataSource, 
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        selectFilterIfNeeded(initialIndexPath: IndexPath(item: 0, section: 0))
+    }
+    
     // MARK: UICollectionViewDelegateFlowLayout
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return theme.cellSize
+    }
+    
+    // MARK:  Helpers
+    
+    private func selectFilterIfNeeded(initialIndexPath: IndexPath) {
+        DispatchQueue.main.async {
+            guard self.filtersCollectionView.indexPathsForSelectedItems?.isEmpty ?? false,
+                self.filtersCollectionView.cellForItem(at: initialIndexPath) != nil else { return }
+            self.filtersCollectionView.selectItem(at: initialIndexPath, animated: true, scrollPosition: .centeredVertically)
+            self.filtersCollectionView.delegate?.collectionView?(self.filtersCollectionView, didSelectItemAt: initialIndexPath)
+        }
     }
 }
