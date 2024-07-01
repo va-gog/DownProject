@@ -1,14 +1,13 @@
 //
-//  DownProjectTests.swift
+//  CahcheManagerTests.swift
 //  DownProjectTests
 //
-//  Created by Gohar Vardanyan on 6/29/24.
+//  Created by Gohar Vardanyan on 7/1/24.
 //
 
 import XCTest
-@testable import DownProject
 
-final class DownProjectTests: XCTestCase {
+final class CahcheManagerTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
