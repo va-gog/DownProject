@@ -22,6 +22,7 @@ final class ImageCacheManagerTests: XCTestCase {
         
         print("jlsdfn")
         imageCacheManager = ImageCacheManager(cache: mockCache, sessionManager: mockSessionManager)
+        print("slidufh")
     }
 
     override func tearDown() {
