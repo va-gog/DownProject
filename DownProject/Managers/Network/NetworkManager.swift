@@ -11,6 +11,7 @@ import Combine
 protocol URLSessionManagerProtocol {
     func dataTaskPublisher(url: URL) -> AnyPublisher<Data, Error>
     func dataFrom(url: URL) async throws -> (Data, URLResponse)
+    
 
 }
 
@@ -34,6 +35,7 @@ struct NetworkManager: NetworkManagerProtocol {
     private var sessionManager: URLSessionManagerProtocol
     
     init(sessionManager: URLSessionManagerProtocol = URLSessionManager()) {
+        print("dlfun;sldfnlsdfjb")
         self.sessionManager = sessionManager
     }
     
