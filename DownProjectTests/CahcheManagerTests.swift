@@ -8,6 +8,7 @@
 import XCTest
 @testable import DownProject
 
+
 final class ImageCacheManagerTests: XCTestCase {
     var imageCacheManager: ImageCacheManager!
     var mockCache: NSCache<NSString, NSData>!
@@ -15,6 +16,7 @@ final class ImageCacheManagerTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
+        print("jljdfgbsldg")
         mockCache = NSCache<NSString, NSData>()
         mockSessionManager = MockURLSessionManager()
         imageCacheManager = ImageCacheManager(cache: mockCache, sessionManager: mockSessionManager)
