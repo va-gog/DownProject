@@ -16,6 +16,8 @@ protocol URLSessionManagerProtocol {
 
 struct URLSessionManager: URLSessionManagerProtocol {
     func dataTaskPublisher(url: URL) -> AnyPublisher<Data, Error> {
+        print("djfln")
+
         URLSession.shared.dataTaskPublisher(for: url)
            .map { $0.data }
            .mapError { error in error }
