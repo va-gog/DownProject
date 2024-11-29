@@ -19,6 +19,8 @@ final class ImageCacheManagerTests: XCTestCase {
         print("jljdfgbsldg")
         mockCache = NSCache<NSString, NSData>()
         mockSessionManager = MockURLSessionManager()
+        
+        print("jlsdfn")
         imageCacheManager = ImageCacheManager(cache: mockCache, sessionManager: mockSessionManager)
     }
 
