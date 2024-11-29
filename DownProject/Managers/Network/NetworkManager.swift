@@ -17,11 +17,12 @@ protocol URLSessionManagerProtocol {
 struct URLSessionManager: URLSessionManagerProtocol {
     func dataTaskPublisher(url: URL) -> AnyPublisher<Data, Error> {
         print("djfln")
-
-        URLSession.shared.dataTaskPublisher(for: url)
+        print("djfln 2")
+        return URLSession.shared.dataTaskPublisher(for: url)
            .map { $0.data }
            .mapError { error in error }
            .eraseToAnyPublisher()
+
     }
     
     func dataFrom(url: URL)  async throws -> (Data, URLResponse) {
