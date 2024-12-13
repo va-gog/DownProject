@@ -19,6 +19,9 @@ struct URLSessionManager: URLSessionManagerProtocol {
     func dataTaskPublisher(url: URL) -> AnyPublisher<Data, Error> {
         print("djfln")
         print("djfln 2")
+        
+        print("develop 1")
+        print("feature 1")
         return URLSession.shared.dataTaskPublisher(for: url)
            .map { $0.data }
            .mapError { error in error }
